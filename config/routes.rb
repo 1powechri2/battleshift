@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/', to: "welcome#show"
+  root to: "welcome#index"
 
   namespace :api do
     namespace :v1 do
