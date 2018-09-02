@@ -12,6 +12,33 @@ describe "Api::V1::Shots" do
       )
     }
 
+    it "two players can fire at each other" do
+      ShipPlacer.new(board: player_1_board,
+                     ship: sm_ship,
+                     start_space: "A1",
+                     end_space: "A2").run
+
+      ShipPlacer.new(board: player_2_board,
+                     ship: sm_ship,
+                     start_space: "B1",
+                     end_space: "B2").run
+
+      endpoint = "/api/v1/games/#{game.id}/shots"
+      json_payload = {target: "A1"}.to_json
+      headers = { "CONTENT_TYPE" => "application/json" }
+
+      post endpoint, params: json_payload, headers: headers
+
+      game = JSON.parse(response.body, symbolize_names: true)
+
+binding.pry
+    end
+
+
+
+
+
+
     it "updates the message and board with a hit" do
       allow_any_instance_of(AiSpaceSelector).to receive(:fire!).and_return("Miss")
       ShipPlacer.new(board: player_2_board,
