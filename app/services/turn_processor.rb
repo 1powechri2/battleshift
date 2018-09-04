@@ -19,8 +19,17 @@ class TurnProcessor
     end
   end
 
+  def check_valid_key
+    if @key == game.player_key || @key == game.opponent_key
+      two_player_run!
+    else
+      @status = 401
+      @messages << "Unauthorized"
+    end
+  end
+
   def two_player_run!
-  if game.winner != nil
+  if @game.winner != nil
     @messages << "Invalid move. Game over."
     @status = 400
   elsif game.current_turn == 'challenger' && @key == game.player_key
