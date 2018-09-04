@@ -4,7 +4,7 @@ class ShipPlacer
     @ship        = ship
     @start_space = start_space
     @end_space   = end_space
-    
+
   end
 
   def run
@@ -51,6 +51,14 @@ class ShipPlacer
       raise InvalidShipPlacement.new("Attempting to place ship in a space that is already occupied.")
     else
       space.occupy!(ship)
+    end
+  end
+
+  def message
+    if ship.length == 3
+      "Successfully placed ship with a size of 3. You have 1 ship(s) to place with a size of 2."
+    elsif ship.length == 2
+      "Huh Dooh!"
     end
   end
 end
